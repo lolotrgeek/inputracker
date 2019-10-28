@@ -1,12 +1,14 @@
-# Inputracker
+# Inputracker 
+Python Implementation
 
-## Goals
-1. record macros
-2. record all the time and take video of interactions
-3. be resource efficient
+## How it works
+records keyboard and mouse inputs
+takes screenshots when ever mouse is moved or key is pressed
 
 ## Dependencies
+pynput
+opencv
+pyautogui
+mss
 
-https://github.com/wilix-team/iohook
-https://node-postgres.com
-https://github.com/foreversd/forever
+## Todo
