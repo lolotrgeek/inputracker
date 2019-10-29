@@ -1,28 +1,15 @@
 'use strict'
 const ioHook = require('iohook')
-const robot = require("robotjs")
-const Jimp = require('jimp')
+const {takeScreenshot} = require('./screenshot')
 
 const events = []
 
-/**
- * 
- * @param {string} filename use MIME type .bmp .jpeg .png .tiff .gif
- * @todo bitmap saves incorrect colors
- * @todo consider making async/promise based
- */
-function takeScreenshot(filename) {
-  if(!filename) filename = Date.now().toString() + '.png'
-  console.log(filename)
-  let img = robot.screen.capture(0, 0)
-  let width = img.width
-  let height = img.height
-  new Jimp({ data: img.image, width, height }, (err, image) => image.write(filename))
-}
 
 function onMouseClick (event) {
-  console.log(event)
-  takeScreenshot()
+  let timestamp = Date.now().toString()
+  let filename = timestamp  + '.jpg'
+  console.log([timestamp, event])
+  takeScreenshot(filename)
 }
 
 // timestamp and put event in database

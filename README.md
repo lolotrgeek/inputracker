@@ -1,12 +1,19 @@
 # Inputracker
 
 ## Goals
-1. record macros
-2. record all the time and take video of interactions
+1. record inputs
+2. take screenshots of interactions
 3. be resource efficient
 
 ## Dependencies
-
 https://github.com/wilix-team/iohook
-https://node-postgres.com
-https://github.com/foreversd/forever
+
+https://github.com/oliver-moran/jimp
+
+https://github.com/octalmage/robotjs
+
+https://github.com/bencevans/screenshot-desktop
+
+## Todo
+* doesn't capture mouse pixels
+* make collection async and/or threaded
