@@ -2,10 +2,13 @@
 const ioHook = require('iohook')
 const fs = require('fs')
 
+const timestamp = Date.now().toString()
+
 function saveMacro(jsonString, file) {
-    if (!file) file = './ioHook_macro_' + Date.now().toString() + '.json'
+    if (!file) file = './testmacro'
+    // if (!file) file = './testmacro' + timestamp
     console.log(file)
-    fs.writeFile(file, jsonString, err => {
+    fs.appendFile(file, jsonString, err => {
         if (err) {
             console.log('Error writing file', err)
         } else {
@@ -13,17 +16,14 @@ function saveMacro(jsonString, file) {
         }
     })
 }
-
-
 function recordMacro() {
 
-
-    // timestamp and put event in database
-    ioHook.on('any', event => saveMacro(JSON.stringify(event)))
-    // ioHook.on('mousemove', event => saveMacro(JSON.stringify(event)))
-    // ioHook.on('keydown', event => console.log(event))
-    // ioHook.on('mouseclick', event => onMouseClick(event))
-    // ioHook.on('mousewheel', event => console.log(event))
+    // record events
+    ioHook.on('mouseclick', event => saveMacro(JSON.stringify(event)  + ',' ))
+    ioHook.on('mousemove', event => saveMacro(JSON.stringify(event)  + ',' ))
+    ioHook.on('keydown', event => saveMacro(JSON.stringify(event)   + ','))
+    ioHook.on('mouseclick', event => saveMacro(JSON.stringify(event)  + ',' ))
+    ioHook.on('mousewheel', event => saveMacro(JSON.stringify(event)  + ',' ))
 
 
     // input control
