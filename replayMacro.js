@@ -34,7 +34,7 @@ function parseEvents(macro) {
 function eventDecode(event) {
     if (event.type === 'mouseclick') {
         mouseMap.map(key => {
-            if(key.number === event.button) {
+            if (key.number === event.button) {
                 //add key name to event
                 event.name = key.name
             }
@@ -42,7 +42,7 @@ function eventDecode(event) {
     }
     if (event.type === 'mousedown') {
         mouseMap.map(key => {
-            if(key.number === event.button) {
+            if (key.number === event.button) {
                 //add key name to event
                 event.name = key.name
             }
@@ -50,7 +50,7 @@ function eventDecode(event) {
     }
     if (event.type === 'mouseup') {
         mouseMap.map(key => {
-            if(key.number === event.button) {
+            if (key.number === event.button) {
                 //add key name to event
                 event.name = key.name
             }
@@ -58,7 +58,7 @@ function eventDecode(event) {
     }
     if (event.type === 'mousedrag') {
         mouseMap.map(key => {
-            if(key.number === event.button) {
+            if (key.number === event.button) {
                 //add key name to event
                 event.name = key.name
             }
@@ -66,7 +66,7 @@ function eventDecode(event) {
     }
     if (event.type === 'mousewheel') {
         mouseMap.map(key => {
-            if(key.number === event.button) {
+            if (key.number === event.button) {
                 //add key name to event
                 event.name = key.name
             }
@@ -75,50 +75,58 @@ function eventDecode(event) {
     //keyboard
     if (event.type === 'keydown') {
         keyMap.map(key => {
-            if(key.number === event.keycode) {
+            if (key.number === event.keycode) {
                 //add key name to event
                 event.name = key.name
             }
+            event.modified = []
+            if (event.shiftKey === true) event.modified.push('shift')
+            if (event.altKey === true) event.modified.push('alt')
+            if (event.ctrlKey === true) event.modified.push('ctrl')
+            if (event.metaKey === true) event.modified.push('command') // also winkey
         })
     }
     if (event.type === 'keyup') {
         keyMap.map(key => {
-            if(key.number === event.keycode) {
+            if (key.number === event.keycode) {
                 //add key name to event
                 event.name = key.name
             }
+            event.modified = []
+            if (event.shiftKey === true) event.modified.push('shift')
+            if (event.altKey === true) event.modified.push('alt')
+            if (event.ctrlKey === true) event.modified.push('ctrl')
+            if (event.metaKey === true) event.modified.push('command') // also winkey
         })
-    }  
+    }
 }
 
 function eventReplay(event) {
     //mouse
     if (event.type === 'mousemove') {
         robot.moveMouse(event.x, event.y)
+        // console.log('mouse move: '+ event.x + ' , ' + event.y)
     }
     if (event.type === 'mouseclick') {
-        robot.moveMouse(event.x, event.y)
+        robot.mouseClick(event.name)
+        // console.log('mouse click button: ' + event.name)
     }
-    if (event.type === 'mousedown') {
-
-    }
-    if (event.type === 'mouseup') {
-
-    }
+    // if (event.type === 'mousedown') 
+    // if (event.type === 'mouseup') 
     if (event.type === 'mousedrag') {
         robot.dragMouse(event.x, event.y)
     }
     if (event.type === 'mousewheel') {
-
+        robot.scrollMouse(event.x, event.y)
     }
     //keyboard
     if (event.type === 'keydown') {
-
+        robot.keyTap(event.name, event.modified)
     }
     if (event.type === 'keyup') {
-
+        robot.keyToggle(key.name, 'up')
     }
 
 }
 
-loadMacro('./testmacro')
+loadMacro('./testmacro1572531761008')

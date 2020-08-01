@@ -1,11 +1,11 @@
 exports.mouseMap = [
   {
       "name": "left",
-      "number": 0
+      "number": 1
   },
   {
       "name": "middle",
-      "number": 1
+      "number": 3
   },
   {
       "name": "right",
@@ -66,7 +66,7 @@ exports.keyMap = [
       "number": 13
     },
     {
-      "name": "Backspace",
+      "name": "backspace",
       "number": 14
     },
     {
@@ -126,7 +126,7 @@ exports.keyMap = [
       "number": 28
     },
     {
-      "name": "L Control",
+      "name": "control",
       "number": 29
     },
     {
@@ -178,7 +178,7 @@ exports.keyMap = [
       "number": 41
     },
     {
-      "name": "L Shift",
+      "name": "shift",
       "number": 42
     },
     {
@@ -226,7 +226,7 @@ exports.keyMap = [
       "number": 53
     },
     {
-      "name": "R Shift",
+      "name": "right_shift",
       "number": 54
     },
     {
@@ -234,7 +234,7 @@ exports.keyMap = [
       "number": 55
     },
     {
-      "name": "L ALT",
+      "name": "alt",
       "number": 56
     },
     {
@@ -342,7 +342,7 @@ exports.keyMap = [
       "number": 82
     },
     {
-      "name": "Delete",
+      "name": "delete",
       "number": 83
     },
     {
@@ -426,7 +426,7 @@ exports.keyMap = [
       "number": 103
     },
     {
-      "name": "PgUp",
+      "name": "pageup",
       "number": 104
     },
     {
@@ -446,15 +446,15 @@ exports.keyMap = [
       "number": 108
     },
     {
-      "name": "PgDn",
+      "name": "pagedown",
       "number": 109
     },
     {
-      "name": "Insert",
+      "name": "insert",
       "number": 110
     },
     {
-      "name": "Delete",
+      "name": "delete",
       "number": 111
     },
     {
@@ -486,12 +486,12 @@ exports.keyMap = [
       "number": 118
     },
     {
-      "name": "Pause",
+      "name": "pause",
       "number": 119
     }
     ,
     {
-      "name": "Command",
+      "name": "command",
       "number": 3675
     }
   ]

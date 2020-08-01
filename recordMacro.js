@@ -5,9 +5,7 @@ const fs = require('fs')
 const timestamp = Date.now().toString()
 
 function saveMacro(jsonString, file) {
-    if (!file) file = './testmacro'
-    // if (!file) file = './testmacro' + timestamp
-    console.log(file)
+    if (!file) file = './testmacro' + timestamp
     fs.appendFile(file, jsonString, err => {
         if (err) {
             console.log('Error writing file', err)
@@ -19,11 +17,10 @@ function saveMacro(jsonString, file) {
 function recordMacro() {
 
     // record events
-    ioHook.on('mouseclick', event => saveMacro(JSON.stringify(event)  + ',' ))
-    ioHook.on('mousemove', event => saveMacro(JSON.stringify(event)  + ',' ))
-    ioHook.on('keydown', event => saveMacro(JSON.stringify(event)   + ','))
-    ioHook.on('mouseclick', event => saveMacro(JSON.stringify(event)  + ',' ))
-    ioHook.on('mousewheel', event => saveMacro(JSON.stringify(event)  + ',' ))
+    ioHook.on('mouseclick', event => saveMacro(JSON.stringify(event) + ','))
+    ioHook.on('mousemove', event => saveMacro(JSON.stringify(event) + ','))
+    ioHook.on('keydown', event => saveMacro(JSON.stringify(event) + ','))
+    ioHook.on('mousewheel', event => saveMacro(JSON.stringify(event) + ','))
 
 
     // input control
@@ -39,11 +36,15 @@ function recordMacro() {
 
     // Register and start hook
     ioHook.start()
+
+    // Alternatively, pass true to start in DEBUG mode.
+    // ioHook.start(true)
 }
 
 
+module.exports = {
+    recordMacro : recordMacro
+}
 recordMacro()
 
 
-// Alternatively, pass true to start in DEBUG mode.
-  // ioHook.start(true)

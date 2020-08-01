@@ -15,5 +15,6 @@ https://github.com/octalmage/robotjs
 https://github.com/bencevans/screenshot-desktop
 
 ## Todo
-* doesn't capture mouse pixels
 * make collection async and/or threaded
+* speed up macro replay (maybe skip frames)
+* generate a keymap
