@@ -5,10 +5,11 @@
 ```
 node src/recordMacro
 ```
-Start : `ctrl`  + `f8`
+Start: `ctrl`  + `f7`
 
-Stop : `ctrl`  + `f7`
+Stop: `ctrl`  + `f8`
 
+Save: `ctrl` + `f9`
 
 ## Replay Macro
 ```
@@ -35,4 +36,4 @@ https://github.com/bencevans/screenshot-desktop
 * speed up macro replay (maybe skip frames)
 * generate keymap
 * replay: key flag errors (capitalization in map, modifier keys, ...)
-* replay: mousedrag errors (misses dragging) 
+* replay: last key held on cancel

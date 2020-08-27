@@ -1,8 +1,8 @@
-// each input has a `number` and a `name` that depends on the device and OS
-// iohook uses `number`, robotJS uses `name`
+// each input has a `number` and a `name` that depends on the device and os
+// iohook uses `number`, robotjs uses `name`
 // the following maps names to numbers
 
-exports.mouseMap = [
+exports.mousemap = [
   {
       "name": "left",
       "number": 1
@@ -16,7 +16,7 @@ exports.mouseMap = [
       "number": 2
   }
 ]
-exports.keyMap = [
+exports.keymap = [
     {
       "name": "escape",
       "number": 1
@@ -74,47 +74,47 @@ exports.keyMap = [
       "number": 14
     },
     {
-      "name": "Tab",
+      "name": "tab",
       "number": 15
     },
     {
-      "name": "Q",
+      "name": "q",
       "number": 16
     },
     {
-      "name": "W",
+      "name": "w",
       "number": 17
     },
     {
-      "name": "E",
+      "name": "e",
       "number": 18
     },
     {
-      "name": "R",
+      "name": "r",
       "number": 19
     },
     {
-      "name": "T",
+      "name": "t",
       "number": 20
     },
     {
-      "name": "Y",
+      "name": "y",
       "number": 21
     },
     {
-      "name": "U",
+      "name": "u",
       "number": 22
     },
     {
-      "name": "I",
+      "name": "i",
       "number": 23
     },
     {
-      "name": "O",
+      "name": "o",
       "number": 24
     },
     {
-      "name": "P",
+      "name": "p",
       "number": 25
     },
     {
@@ -134,39 +134,39 @@ exports.keyMap = [
       "number": 29
     },
     {
-      "name": "A",
+      "name": "a",
       "number": 30
     },
     {
-      "name": "S",
+      "name": "s",
       "number": 31
     },
     {
-      "name": "D",
+      "name": "d",
       "number": 32
     },
     {
-      "name": "F",
+      "name": "f",
       "number": 33
     },
     {
-      "name": "G",
+      "name": "g",
       "number": 34
     },
     {
-      "name": "H",
+      "name": "h",
       "number": 35
     },
     {
-      "name": "J",
+      "name": "j",
       "number": 36
     },
     {
-      "name": "K",
+      "name": "k",
       "number": 37
     },
     {
-      "name": "L",
+      "name": "l",
       "number": 38
     },
     {
@@ -190,31 +190,31 @@ exports.keyMap = [
       "number": 43
     },
     {
-      "name": "Z",
+      "name": "z",
       "number": 44
     },
     {
-      "name": "X",
+      "name": "x",
       "number": 45
     },
     {
-      "name": "C",
+      "name": "c",
       "number": 46
     },
     {
-      "name": "V",
+      "name": "v",
       "number": 47
     },
     {
-      "name": "B",
+      "name": "b",
       "number": 48
     },
     {
-      "name": "N",
+      "name": "n",
       "number": 49
     },
     {
-      "name": "M",
+      "name": "m",
       "number": 50
     },
     {
@@ -246,163 +246,163 @@ exports.keyMap = [
       "number": 57
     },
     {
-      "name": "CAPS LOCK",
+      "name": "capslock",
       "number": 58
     },
     {
-      "name": "F1",
+      "name": "f1",
       "number": 59
     },
     {
-      "name": "F2",
+      "name": "f2",
       "number": 60
     },
     {
-      "name": "F3",
+      "name": "f3",
       "number": 61
     },
     {
-      "name": "F4",
+      "name": "f4",
       "number": 62
     },
     {
-      "name": "F5",
+      "name": "f5",
       "number": 63
     },
     {
-      "name": "F6",
+      "name": "f6",
       "number": 64
     },
     {
-      "name": "F7",
+      "name": "f7",
       "number": 65
     },
     {
-      "name": "F8",
+      "name": "f8",
       "number": 66
     },
     {
-      "name": "F9",
+      "name": "f9",
       "number": 67
     },
     {
-      "name": "F10",
+      "name": "f10",
       "number": 68
     },
     {
-      "name": "NUM LOCK",
+      "name": "numpad_lock",
       "number": 69
     },
+    // {
+    //   "name": "scroll lock",
+    //   "number": 70
+    // },
     {
-      "name": "SCROLL LOCK",
-      "number": 70
-    },
-    {
-      "name": "HOME 7",
+      "name": "numpad_7",
       "number": 71
     },
     {
-      "name": "UP 8",
+      "name": "numpad_8",
       "number": 72
     },
     {
-      "name": "PGUP 9",
+      "name": "numpad_9",
       "number": 73
     },
     {
-      "name": "-",
+      "name": "numpad_-",
       "number": 74
     },
     {
-      "name": "LEFT 4",
+      "name": "numpad_4",
       "number": 75
     },
     {
-      "name": 5,
+      "name": "numpad_5",
       "number": 76
     },
     {
-      "name": "RT ARROW 6",
+      "name": "numpad_6",
       "number": 77
     },
     {
-      "name": "+",
+      "name": "numpad_+",
       "number": 78
     },
     {
-      "name": "END 1",
+      "name": "numpad_1",
       "number": 79
     },
     {
-      "name": "DOWN 2",
+      "name": "numpad_2",
       "number": 80
     },
     {
-      "name": "PGDN 3",
+      "name": "numpad_3",
       "number": 81
     },
     {
-      "name": "Insert",
+      "name": "numpad_0",
       "number": 82
     },
     {
       "name": "delete",
       "number": 83
     },
+    // {
+    //   "name": "",
+    //   "number": 84
+    // },
+    // {
+    //   "name": "",
+    //   "number": 85
+    // },
+    // {
+    //   "name": "",
+    //   "number": 86
+    // },
     {
-      "name": "",
-      "number": 84
-    },
-    {
-      "name": "",
-      "number": 85
-    },
-    {
-      "name": "",
-      "number": 86
-    },
-    {
-      "name": "F11",
+      "name": "f11",
       "number": 87
     },
     {
-      "name": "F12",
+      "name": "f12",
       "number": 88
     },
+    // {
+    //   "name": "",
+    //   "number": 89
+    // },
+    // {
+    //   "name": "",
+    //   "number": 90
+    // },
+    // {
+    //   "name": "",
+    //   "number": 91
+    // },
+    // {
+    //   "name": "",
+    //   "number": 92
+    // },
+    // {
+    //   "name": "",
+    //   "number": 93
+    // },
+    // {
+    //   "name": "",
+    //   "number": 94
+    // },
+    // {
+    //   "name": "",
+    //   "number": 95
+    // },
     {
-      "name": "",
-      "number": 89
-    },
-    {
-      "name": "",
-      "number": 90
-    },
-    {
-      "name": "",
-      "number": 91
-    },
-    {
-      "name": "",
-      "number": 92
-    },
-    {
-      "name": "",
-      "number": 93
-    },
-    {
-      "name": "",
-      "number": 94
-    },
-    {
-      "name": "",
-      "number": 95
-    },
-    {
-      "name": "R Enter",
+      "name": "enter",
       "number": 96
     },
     {
-      "name": "R Control",
+      "name": "right_control",
       "number": 97
     },
     {
@@ -410,23 +410,23 @@ exports.keyMap = [
       "number": 98
     },
     {
-      "name": "Print Screen",
+      "name": "printscreen",
       "number": 99
     },
     {
-      "name": "R Alt",
+      "name": "right_alt",
       "number": 100
     },
+    // {
+    //   "name": "",
+    //   "number": 101
+    // },
     {
-      "name": "",
-      "number": 101
-    },
-    {
-      "name": "Home",
+      "name": "home",
       "number": 102
     },
     {
-      "name": "Up",
+      "name": "up",
       "number": 103
     },
     {
@@ -434,19 +434,19 @@ exports.keyMap = [
       "number": 104
     },
     {
-      "name": "Left",
+      "name": "left",
       "number": 105
     },
     {
-      "name": "Right",
+      "name": "right",
       "number": 106
     },
     {
-      "name": "End",
+      "name": "end",
       "number": 107
     },
     {
-      "name": "Down",
+      "name": "down",
       "number": 108
     },
     {
@@ -461,41 +461,40 @@ exports.keyMap = [
       "name": "delete",
       "number": 111
     },
-    {
-      "name": "",
-      "number": 112
-    },
-    {
-      "name": "",
-      "number": 113
-    },
-    {
-      "name": "",
-      "number": 114
-    },
-    {
-      "name": "",
-      "number": 115
-    },
-    {
-      "name": "",
-      "number": 116
-    },
-    {
-      "name": "",
-      "number": 117
-    },
-    {
-      "name": "",
-      "number": 118
-    },
-    {
-      "name": "pause",
-      "number": 119
-    }
-    ,
-    {
-      "name": "command",
-      "number": 3675
-    }
+    // {
+    //   "name": "",
+    //   "number": 112
+    // },
+    // {
+    //   "name": "",
+    //   "number": 113
+    // },
+    // {
+    //   "name": "",
+    //   "number": 114
+    // },
+    // {
+    //   "name": "",
+    //   "number": 115
+    // },
+    // {
+    //   "name": "",
+    //   "number": 116
+    // },
+    // {
+    //   "name": "",
+    //   "number": 117
+    // },
+    // {
+    //   "name": "",
+    //   "number": 118
+    // },
+    // {
+    //   "name": "pause",
+    //   "number": 119
+    // },
+    // {
+    //   "name": "command",
+    //   "number": 3675
+    // }
   ]

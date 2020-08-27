@@ -3,46 +3,63 @@ const ioHook = require('iohook')
 const fs = require('fs')
 
 const timestamp = Date.now().toString()
+const events = []
 
 function saveMacro(jsonString, file) {
     // if (!file) file = './testmacro' + timestamp
     if (!file) file = './testmacro'
-    fs.appendFile(file, jsonString, err => {
+    fs.writeFile(file, jsonString, err => {
         if (err) {
             console.log('Error writing file', err)
         } else {
-            console.log('Successfully wrote ' + jsonString)
+            // console.log('Successfully wrote ' + jsonString)
+            console.log('Success!')
         }
     })
 }
-function recordMacro() {
 
+function saveEvent(event) {
+    console.log(event)
+    events.push(event)
+}
+
+function recordMacro() {
     // record events
-    ioHook.on('keyup', event => saveMacro(JSON.stringify(event) + ','))
-    ioHook.on('keydown', event => saveMacro(JSON.stringify(event) + ','))
-    // ioHook.on('mouseclick', event => saveMacro(JSON.stringify(event) + ','))
-    ioHook.on('mousedown', event => saveMacro(JSON.stringify(event) + ','))
-    ioHook.on('mouseup', event => saveMacro(JSON.stringify(event) + ','))
-    ioHook.on('mousemove', event => saveMacro(JSON.stringify(event) + ','))
-    ioHook.on('mousewheel', event => saveMacro(JSON.stringify(event) + ','))
-    ioHook.on('mouseDrag', event => saveMacro(JSON.stringify(event) + ','))
+    ioHook.on('keyup', event => saveEvent(event))
+    ioHook.on('keydown', event => saveEvent(event))
+    // ioHook.on('mouseclick', event => saveEvent(event))
+    ioHook.on('mousedown', event => saveEvent(event))
+    ioHook.on('mouseup', event => saveEvent(event))
+    ioHook.on('mousemove', event => saveEvent(event))
+    ioHook.on('mousewheel', event => saveEvent(event))
+    ioHook.on('mousedrag', event => saveEvent(event))
 
 
     // input control
     /**
-     * stop `ctrl` + `f7`
+     * start `ctrl` + `f7`
      */
     ioHook.registerShortcut([29, 65], (keys) => {
+        console.log('Shortcut start called:', keys)
+        ioHook.start()
+    });
+
+    /**
+     * stop `ctrl` + `f8`
+     */
+    ioHook.registerShortcut([29, 66], (keys) => {
         console.log('Shortcut stop called:', keys)
         ioHook.stop()
     });
 
     /**
-     * start `ctrl` + `f8`
+     * save `ctrl` + `f9`
      */
-    ioHook.registerShortcut([29, 66], (keys) => {
-        console.log('Shortcut start called:', keys)
-        ioHook.start()
+    ioHook.registerShortcut([29, 67], (keys) => {
+        console.log('Shortcut save called:', keys)
+        ioHook.stop()
+        console.log('Saving...')
+        saveMacro(JSON.stringify(events))
     });
 
     // Register and start hook
@@ -53,9 +70,4 @@ function recordMacro() {
 }
 
 
-module.exports = {
-    recordMacro: recordMacro
-}
-recordMacro()
-
-
+module.exports = {recordMacro}
