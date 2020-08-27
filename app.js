@@ -19,7 +19,7 @@ function saveEvent(JSONSTRING, FILE) {
 
 function recordEvent(EVENT) {
   let TIMESTAMP = Date.now().toString()
-  screenshot().then((IMG) => {
+  screenshot.all().then((IMG) => {
     saveEvent(JSON.stringify({ timestamp: TIMESTAMP, input: EVENT, screenshot: IMG }))
   }).catch((ERR) => {
     console.log(ERR)

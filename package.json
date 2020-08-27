@@ -7,18 +7,18 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "csv-writer": "^1.5.0",
     "ffmpeg-static": "^2.7.0",
-    "iohook": "^0.6.1",
+    "iohook": "^0.6.6",
     "jimp": "^0.8.5",
     "mongodb": "^3.3.2",
     "pg": "^7.12.1",
     "record-screen": "^3.11.0",
     "recordrtc": "^5.5.8",
-    "robotjs": "^0.5.1",
-    "screenshot-desktop": "^1.10.0"
+    "robotjs": "^0.6.0",
+    "screenshot-desktop": "^1.1.2"
   },
   "devDependencies": {}
 }
