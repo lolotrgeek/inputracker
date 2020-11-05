@@ -15,7 +15,7 @@ const MouseEmitter = new EventEmitter()
  */
 function saveMap(jsonString, type) {
     if (!type) console.log('Error, provide type `mouse` or `key`')
-    let file = `./${type}map.json`
+    let file = `./maps/${type}map.json`
     fs.writeFile(file, jsonString, err => {
         if (err) {
             console.log('Error writing file', err)
