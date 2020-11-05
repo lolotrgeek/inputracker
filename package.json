@@ -9,15 +9,18 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@nut-tree/nut-js": "^1.5.0",
     "csv-writer": "^1.5.0",
     "ffmpeg-static": "^2.7.0",
     "iohook": "^0.6.6",
     "jimp": "^0.8.5",
+    "keycode": "^2.2.0",
     "mongodb": "^3.3.2",
+    "native-keymap": "^2.2.0",
     "pg": "^7.12.1",
     "record-screen": "^3.11.0",
     "recordrtc": "^5.5.8",
-    "robotjs": "^0.6.0",
+    "robotjs": "git+https://github.com/octalmage/robotjs.git#master",
     "screenshot-desktop": "^1.1.2"
   },
   "devDependencies": {}
