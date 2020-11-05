@@ -31,25 +31,26 @@ function mapMouse() {
 
     ioHook.start()
     ioHook.on('mouseup', event => {
-        myEmitter.emit('heard', {...event, index})
+        myEmitter.emit('mouse', {...event, index})
         index++
     })
-    myEmitter.on('done', () => {
+    myEmitter.on('mousedone', () => {
         ioHook.stop()
         saveMap(JSON.stringify(mousemap), './mousemap.json')
     })
     robot.mouseToggle('up', mouseNames[index])
 
-    myEmitter.on('heard', event => {
-        console.log(`${index}/${mouseNames.length}`)
-        if(index >= mouseNames.length) {
+    myEmitter.on('mouse', event => {
+        // console.log(`${event.index+1}/${mouseNames.length} : `, { "name": mouseNames[event.index], "number": event.button })
+        // console.log('next:', mouseNames[index+1] )
+        mousemap.push({ "name": mouseNames[event.index], "number": event.button })
+        if(index + 1 >= mouseNames.length) {
             myEmitter.emit('done')
             console.log('done') 
-            return
+        } else {
+            robot.mouseToggle('up', mouseNames[index+1])
         }
-        mousemap.push({ "name": mouseNames[event.index], "number": event.button })
-        // console.log(keyNames[index], event.keycode);
-        robot.mouseToggle('up', mouseNames[index])
+
     });
 }
 
@@ -77,19 +78,20 @@ function mapKeys() {
     robot.keyToggle(keyNames[index], 'up')
 
     myEmitter.on('heard', event => {
-        console.log(`${index}/${keyNames.length}`)
-        if(index >= keyNames.length) {
-            myEmitter.emit('done')
-            console.log('done'); 
-            return
-        }
+        console.log(`${event.index+1}/${keyNames.length} : `, { "name": keyNames[event.index], "number": event.keycode })
         keymap.push({ "name": keyNames[event.index], "number": event.keycode })
+        if(index + 1 >= keyNames.length) {
+            myEmitter.emit('done')
+            console.log('done')
+            return
+        } else {
+            robot.keyToggle(keyNames[index+1], 'up')
+        }
         // console.log(keyNames[index], event.keycode);
-        robot.keyToggle(keyNames[index], 'up')
     });
 }
 
-mapMouse()
-
+// mapMouse()
+mapKeys()
 
 // process.exit()
