@@ -34,6 +34,6 @@ https://github.com/bencevans/screenshot-desktop
 ## Todo
 * make collection async and/or threaded
 * speed up macro replay (maybe skip frames)
-* generate keymap
+* session replay
+* session as state/action
 * replay: key flag errors (capitalization in map, modifier keys, ...)
-* replay: last key held on cancel
