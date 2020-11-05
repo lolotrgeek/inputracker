@@ -1,10 +1,13 @@
 const robot = require('robotjs')
+const ioHook = require('iohook')
 const fs = require('fs')
 const process = require('process')
-const { mousemap, keymap } = require('./keyMap_manual')
-// const keymap = require('./keymap.json')
-// const mousemap = require('./mousemap.json')
+const EventEmitter = require('events')
+const Emitter = new EventEmitter()
 
+// const { mousemap, keymap } = require('./keyMap_manual')
+const keymap = require('./maps/keymap.json')
+const mousemap = require('./maps/mousemap.json')
 
 function loadMacro(file) {
     fs.readFile(file, (err, data) => {
@@ -23,14 +26,12 @@ function loadMacro(file) {
 /**
  * lift all keys
  */
-function clearKeys(){
+function clearKeys() {
     robot.setKeyboardDelay(1)
     mousemap.map(key => {
-        console.log(key)
         robot.mouseToggle('up', key.name)
     })
     keymap.map(key => {
-        console.log(key)
         robot.keyToggle(key.name, 'up')
     })
     console.log('keys cleared')
@@ -41,10 +42,12 @@ function clearKeys(){
  * @param {array} macro array of event objects
  */
 function parseEvents(macro) {
-    macro.map(event => {
+    macro.forEach((event, index) => {
         eventDecode(event)
-        // console.log(event)
         eventReplay(event)
+        if (index + 1 >= macro.length) {
+            Emitter.emit('replaydone')
+        }
     })
 }
 
@@ -145,18 +148,64 @@ function eventReplay(event) {
     }
     //keyboard
     if (event.type === 'keydown') {
-        console.log(event)
+        // console.log(event)
         robot.keyToggle(event.name, 'down', event.modified)
     }
     if (event.type === 'keyup') {
-        console.log(event)
+        // console.log(event)
         robot.keyToggle(event.name, 'up', event.modified)
     }
 
 }
 
-module.exports = { loadMacro }
+/**
+ * 
+ * @param {string} path points to the macro file
+ */
+function replayMacro(path) {
+    console.log('Ready to Replay Macro: `ctrl + f7` to start. `ctrl + f8` to stop.')
+    /**
+     * start `ctrl` + `f7`
+     */
+    ioHook.registerShortcut([29, 65], (keys) => {
+        console.log('Shortcut start called:', keys)
+        loadMacro(path)
+    });
 
-loadMacro('./testmacro')
-clearKeys()
-process.exit()
+    /**
+     * stop `ctrl` + `f8`
+     * TODO: does not register during a macro, cannot stop while playing...
+     */
+    ioHook.registerShortcut([29, 66], (keys) => {
+        console.log('Shortcut stop called:', keys)
+        Emitter.emit('exit')
+    });
+
+    ioHook.start()
+
+    Emitter.on('replaydone', () => {
+        Emitter.emit('exit')
+    })
+
+    // https://stackoverflow.com/a/14032965
+    process.stdin.resume();
+    function exitHandler() {
+        clearKeys()
+        process.exit()
+    }
+
+    //do something when app is closing
+    Emitter.on('exit', exitHandler.bind(null));
+
+    //catches ctrl+c event
+    process.on('SIGINT', exitHandler.bind(null));
+
+    // catches "kill pid" (for example: nodemon restart)
+    process.on('SIGUSR1', exitHandler.bind(null));
+    process.on('SIGUSR2', exitHandler.bind(null));
+
+    //catches uncaught exceptions
+    process.on('uncaughtException', exitHandler.bind(null));
+}
+
+module.exports = { replayMacro }

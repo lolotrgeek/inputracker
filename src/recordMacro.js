@@ -19,11 +19,12 @@ function saveMacro(jsonString, file) {
 }
 
 function saveEvent(event) {
-    console.log(event)
+    // console.log(event)
     events.push(event)
 }
 
 function recordMacro() {
+    console.log('Recording Macro: press `ctrl + f9` to save.')
     // record events
     ioHook.on('keyup', event => saveEvent(event))
     ioHook.on('keydown', event => saveEvent(event))
@@ -36,6 +37,7 @@ function recordMacro() {
 
 
     // input control
+    // TODO: these need to bind from a keymap
     /**
      * start `ctrl` + `f7`
      */
