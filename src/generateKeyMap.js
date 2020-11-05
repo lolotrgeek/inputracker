@@ -2,18 +2,26 @@ const robot = require('robotjs')
 const ioHook = require('iohook')
 const fs = require('fs')
 const { keyNames, mouseNames } = require('./inputNames')
-const EventEmitter = require('events')
 const process = require('process')
-const myEmitter = new EventEmitter()
+const EventEmitter = require('events')
+const Emitter = new EventEmitter()
+const KeyEmitter = new EventEmitter()
+const MouseEmitter = new EventEmitter()
 
-function saveMap(jsonString, file) {
-    if (!file) file = './keymap.json'
-    // if (!file) file = './testmacro' + timestamp
+/**
+ * 
+ * @param {string} jsonString an array string of `{name, number}` objects 
+ * @param {string} type `mouse` or `key` 
+ */
+function saveMap(jsonString, type) {
+    if (!type) console.log('Error, provide type `mouse` or `key`')
+    let file = `./${type}map.json`
     fs.writeFile(file, jsonString, err => {
         if (err) {
             console.log('Error writing file', err)
         } else {
             console.log('Successfully wrote ' + jsonString)
+            Emitter.emit('saved', type)
         }
     })
 }
@@ -31,24 +39,24 @@ function mapMouse() {
 
     ioHook.start()
     ioHook.on('mouseup', event => {
-        myEmitter.emit('mouse', {...event, index})
+        MouseEmitter.emit('mouse', { ...event, index })
         index++
     })
-    myEmitter.on('mousedone', () => {
+    MouseEmitter.on('done', () => {
         ioHook.stop()
-        saveMap(JSON.stringify(mousemap), './mousemap.json')
+        saveMap(JSON.stringify(mousemap), 'mouse')
     })
     robot.mouseToggle('up', mouseNames[index])
 
-    myEmitter.on('mouse', event => {
+    MouseEmitter.on('mouse', event => {
         // console.log(`${event.index+1}/${mouseNames.length} : `, { "name": mouseNames[event.index], "number": event.button })
         // console.log('next:', mouseNames[index+1] )
         mousemap.push({ "name": mouseNames[event.index], "number": event.button })
-        if(index + 1 >= mouseNames.length) {
-            myEmitter.emit('done')
-            console.log('done') 
+        if (index + 1 >= mouseNames.length) {
+            MouseEmitter.emit('done')
+            console.log('done')
         } else {
-            robot.mouseToggle('up', mouseNames[index+1])
+            robot.mouseToggle('up', mouseNames[index + 1])
         }
 
     });
@@ -68,30 +76,32 @@ function mapKeys() {
     ioHook.start()
 
     ioHook.on('keyup', event => {
-        myEmitter.emit('heard', {...event, index})
+        KeyEmitter.emit('heard', { ...event, index })
         index++
     })
-    myEmitter.on('done', () => {
+    KeyEmitter.on('done', () => {
         ioHook.stop()
-        saveMap(JSON.stringify(keymap), './keymap.json')
+        saveMap(JSON.stringify(keymap), 'key')
     })
     robot.keyToggle(keyNames[index], 'up')
 
-    myEmitter.on('heard', event => {
-        console.log(`${event.index+1}/${keyNames.length} : `, { "name": keyNames[event.index], "number": event.keycode })
+    KeyEmitter.on('heard', event => {
+        console.log(`${event.index + 1}/${keyNames.length} : `, { "name": keyNames[event.index], "number": event.keycode })
         keymap.push({ "name": keyNames[event.index], "number": event.keycode })
-        if(index + 1 >= keyNames.length) {
-            myEmitter.emit('done')
+        if (index + 1 >= keyNames.length) {
+            KeyEmitter.emit('done')
             console.log('done')
             return
         } else {
-            robot.keyToggle(keyNames[index+1], 'up')
+            robot.keyToggle(keyNames[index + 1], 'up')
         }
         // console.log(keyNames[index], event.keycode);
     });
 }
 
-// mapMouse()
-mapKeys()
 
-// process.exit()
+mapMouse()
+Emitter.on('saved', event => {
+    if (event === 'mouse') mapKeys()
+    else process.exit()
+})
