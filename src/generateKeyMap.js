@@ -2,7 +2,9 @@ const robot = require('robotjs')
 const ioHook = require('iohook')
 const fs = require('fs')
 const { keyNames, mouseNames } = require('./inputNames')
+const EventEmitter = require('events')
 const process = require('process')
+const myEmitter = new EventEmitter()
 
 function saveMap(jsonString, file) {
     if (!file) file = './keymap.json'
@@ -20,33 +22,74 @@ function saveMap(jsonString, file) {
  * 
  * @reference https://github.com/octalmage/robotjs/blob/master/src/robotjs.cc#L289
  */
-function mapInputEvent() {
-    let keymap = []
+function mapMouse() {
     let mousemap = []
-    robot.setKeyboardDelay(1)
+    let index = 0
+    // robot.setKeyboardDelay(1)
+    // robot.setMouseDelay(1)
+    // startKeyListeners('test', mousemap)
+
     ioHook.start()
-    // // press every key, wait for event
-    keyNames.map(keyname => {
-        ioHook.on('keyup', event => {
-            keymap.push({ "name": keyname, "number": event.keycode })
-            console.log(' mapped', { "name": keyname, "number": event.keycode })
-        })
-        robot.keyToggle(keyname, 'up')
-        ioHook.removeAllListeners('keyup')
+    ioHook.on('mouseup', event => {
+        myEmitter.emit('heard', {...event, index})
+        index++
     })
-    // press every mousebutton, map button name to button number
-    mouseNames.map(name => {
-        ioHook.on('mouseup', event => {
-            mousemap.push({ "name": name, "number": event.button })
-            console.log(' mapped', { "name": keyname, "number": event.button })
-        })
-        robot.mouseToggle('up', name)
-        ioHook.removeAllListeners('mouseup')
+    myEmitter.on('done', () => {
+        ioHook.stop()
+        saveMap(JSON.stringify(mousemap), './mousemap.json')
     })
-    ioHook.stop()
-    saveMap(JSON.stringify(keymap), './keymap.json')
-    saveMap(JSON.stringify(mousemap), './mousemap.json')
+    robot.mouseToggle('up', mouseNames[index])
+
+    myEmitter.on('heard', event => {
+        console.log(`${index}/${mouseNames.length}`)
+        if(index >= mouseNames.length) {
+            myEmitter.emit('done')
+            console.log('done') 
+            return
+        }
+        mousemap.push({ "name": mouseNames[event.index], "number": event.button })
+        // console.log(keyNames[index], event.keycode);
+        robot.mouseToggle('up', mouseNames[index])
+    });
 }
 
-mapInputEvent()
-process.exit()
+/**
+ * 
+ * @reference https://github.com/octalmage/robotjs/blob/master/src/robotjs.cc#L289
+ */
+function mapKeys() {
+    let keymap = []
+    let index = 0
+    // robot.setKeyboardDelay(1)
+    // robot.setMouseDelay(1)
+    // startKeyListeners('test', keymap)
+
+    ioHook.start()
+
+    ioHook.on('keyup', event => {
+        myEmitter.emit('heard', {...event, index})
+        index++
+    })
+    myEmitter.on('done', () => {
+        ioHook.stop()
+        saveMap(JSON.stringify(keymap), './keymap.json')
+    })
+    robot.keyToggle(keyNames[index], 'up')
+
+    myEmitter.on('heard', event => {
+        console.log(`${index}/${keyNames.length}`)
+        if(index >= keyNames.length) {
+            myEmitter.emit('done')
+            console.log('done'); 
+            return
+        }
+        keymap.push({ "name": keyNames[event.index], "number": event.keycode })
+        // console.log(keyNames[index], event.keycode);
+        robot.keyToggle(keyNames[index], 'up')
+    });
+}
+
+mapMouse()
+
+
+// process.exit()
