@@ -1,0 +1,60 @@
+<html>
+
+<head>
+    <script>
+        // Display Session Replay
+        // I. connect to web socket
+        // II. buffer bitmaps/actions streamed across websocket
+        // III. display bitmaps/actions at framerate and timestamped intervals
+
+        // https://stackoverflow.com/a/23176223
+        function connect() {
+            var ws = new WebSocket('ws://localhost:8081')
+            ws.onopen = function () {
+                // subscribe to some channels
+                ws.send(JSON.stringify({
+                    //.... some message the I must send when I connect ....
+                }))
+            }
+
+            ws.onmessage = function (e) {
+                console.log('Message:', e.data)
+            }
+
+            ws.onclose = function (e) {
+                console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason)
+                setTimeout(function () {
+                    connect()
+                }, 1000)
+            }
+
+            ws.onerror = function (err) {
+                console.error('Socket encountered error: ', err.message, 'Closing socket')
+                ws.close();
+            }
+        }
+
+        connect();
+
+        const buffer = []
+        const framerate = 30
+        const highwater = framerate * 10 // buffer 10 seconds ahead, request 300 frames
+        
+        function startStream() {
+            if(buffer.length <= highwater / 2) {
+                getFrames(highwater)                
+            }
+        }
+        // buffer is low, request for more data
+        function getFrames(amount) {
+
+        }
+
+    </script>
+</head>
+
+<body>
+    <canvas id="graph"></canvas>
+</body>
+
+</html>

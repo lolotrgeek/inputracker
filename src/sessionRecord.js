@@ -1,14 +1,16 @@
 'use strict'
 const ioHook = require('iohook')
-const screenshot = require('screenshot-desktop')
+// const screenshot = require('screenshot-desktop')
+const recordScreen = require('record-screen')
 const fs = require('fs')
 
 const SESSIONSTART = Date.now()
-const EVENTS = []
+const STATE = []
+let EVENTS = []
 let INTERVAL
 
 function storeSession(JSONSTRING, FILE) {
-    if (!FILE) FILE = './events'
+    if (!FILE) FILE = './events.json'
     fs.writeFile(FILE, JSONSTRING, ERR => {
         if (ERR) {
             console.log('Error writing file', ERR)
@@ -23,6 +25,12 @@ function saveEvent(event) {
     EVENTS.push(event)
 }
 
+function saveState(action) {
+    // console.log(event)
+    STATE.push(action)
+}
+
+
 /**
  * 
  * @param {number} fps frames per second
@@ -30,21 +38,42 @@ function saveEvent(event) {
 function setFramerate(fps) {
     return 1000 / fps
 }
-
-function recordScreen() {
-    console.log('recording...')
+function recordEvents() {
+    console.log('recording events...')
     let fps = setFramerate(30)
-    INTERVAL = setTimeout(() => {
-        screenshot.all().then((IMG) => {
-            saveEvent(JSON.stringify({ timestamp: Date.now(), screenshot: IMG }))
-        }).catch((ERR) => {
-            console.log(ERR)
-        })
+    let timestamp
+    console.log(fps)
+    INTERVAL = setInterval(() => {
+        timestamp = Date.now()
+        saveState(JSON.stringify({ timestamp: Date.now(), screenshot: 'IMG', actions: EVENTS }))
+        console.log('Cached', EVENTS.length)
+        EVENTS = []
+        // screenshot.all().then((IMG) => {
+        //     saveState(JSON.stringify({ timestamp: Date.now(), screenshot: 'IMG' }))
+        //     // console.log('Cached', EVENTS.length)
+        //     // EVENTS = []
+        // }).catch((ERR) => {
+        //     console.log(ERR)
+        // })
     }, fps)
 }
+function recordScreen() {
+    // TODO: use ffmpeg to record, instead of bitmaps
+    console.log('recording screen...')
+  .then(result => {
+    // Screen recording is done
+    process.stdout.write(result.stdout)
+    process.stderr.write(result.stderr)
+  })
+  .catch(error => {
+    // Screen recording has failed
+    console.error(error)
+  })
 
-function recordEvents() {
-    console.log('Recording Macro: press `ctrl + f9` to save.')
+}
+
+function sessionRecord() {
+    console.log('Recording Session: press `ctrl + f9` to save.')
     // record events
     ioHook.on('keyup', event => saveEvent({...event, timestamp: Date.now()}))
     ioHook.on('keydown', event => saveEvent({...event, timestamp: Date.now()}))
@@ -84,4 +113,4 @@ function recordEvents() {
     // ioHook.start(true)
 }
 
-module.exports = { recordEvents }
+module.exports = { sessionRecord }
