@@ -1,5 +1,5 @@
 from pynput import mouse
-
+mousemap = {"left": 1, "right": 2, "middle": 3}
 actions = []
 
 def on_move(x, y):
@@ -8,9 +8,14 @@ def on_move(x, y):
         (x, y)))
 
 def on_click(x, y, button, pressed):
-    print('{0} at {1}'.format(
-        'Pressed', button if pressed else 'Released', button,
-        (x, y)))
+    btn_name = str(button).startswith('Button.')
+    if btn_name is True:
+        btn = str(str(button).split('.')[1])
+        print(btn, mousemap[btn])
+    else:
+        print('{0} at {1}'.format(
+            'Pressed', button if pressed else 'Released', button,
+            (x, y)))
     if not pressed:
         # Stop listener
         print(actions)
